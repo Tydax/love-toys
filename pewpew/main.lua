@@ -1,3 +1,4 @@
+---@type Player
 local player
 
 function love.load()

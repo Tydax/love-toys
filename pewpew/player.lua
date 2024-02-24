@@ -1,5 +1,17 @@
+---@meta
+
+---@alias MovementDirection 'LEFT' | 'RIGHT' | nil
+
+---@class Player
+---@field image love.Image
+---@field x number
+---@field y number
+---@field speed number
+---@field width number
+---@field movingDirection? MovementDirection
 Player = Object:extend()
 
+---Constructs a new Player instance
 function Player:new()
     self.image = love.graphics.newImage("assets/panda.png")
     self.x = 300
@@ -13,18 +25,21 @@ function Player:move(movingDirection)
     self.movingDirection = movingDirection
 end
 
+---Updates state of player, called on `love.update`
+---@param dt number Delta since the last update
 function Player:update(dt)
     -- Movement
     local movingCoeff = 0
-    if self.movingDirection == 'left' then
+    if self.movingDirection == 'LEFT' then
         movingCoeff = -1
-    elseif self.movingDirection == 'right' then
+    elseif self.movingDirection == 'RIGHT' then
         movingCoeff = 1
     end
 
     self.x = self.x + self.speed * dt * movingCoeff
 end
 
+---Draws the current's player's frame, called on `love.draw`
 function Player:draw()
     love.graphics.draw(self.image, self.x, self.y)
 end
