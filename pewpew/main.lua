@@ -2,8 +2,7 @@
 local player
 
 function love.load()
-    Object = require 'libs/classic'
-    require 'player'
+    local Player = require 'player'
 
     player = Player()
 end

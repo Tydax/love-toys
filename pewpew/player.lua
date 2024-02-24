@@ -1,5 +1,7 @@
 ---@meta
 
+local Object = require 'libs/classic'
+
 ---@alias MovementDirection 'LEFT' | 'RIGHT' | nil
 
 ---@class Player
@@ -9,7 +11,7 @@
 ---@field speed number
 ---@field width number
 ---@field movingDirection? MovementDirection
-Player = Object:extend()
+local Player = Object:extend()
 
 ---Constructs a new Player instance
 function Player:new()
@@ -43,3 +45,5 @@ end
 function Player:draw()
     love.graphics.draw(self.image, self.x, self.y)
 end
+
+return Player
