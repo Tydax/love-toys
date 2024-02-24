@@ -2,24 +2,24 @@
 local player
 
 function love.load()
-    local Player = require 'player'
+   local Player = require("player")
 
-    player = Player()
+   player = Player()
 end
 
 function love.update(dt)
-    -- Commands
-    if love.keyboard.isDown('a') then
-        player:move('left')
-    elseif love.keyboard.isDown('d') then
-        player:move('right')
-    else
-        player:move(nil)
-    end
+   -- Commands
+   if love.keyboard.isDown("a") then
+      player:move("left")
+   elseif love.keyboard.isDown("d") then
+      player:move("right")
+   else
+      player:move(nil)
+   end
 
-    player:update(dt)
+   player:update(dt)
 end
 
 function love.draw()
-    player:draw()
+   player:draw()
 end
