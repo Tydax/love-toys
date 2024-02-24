@@ -30,14 +30,18 @@ end
 ---Updates state of player, called on `love.update`
 ---@param dt number Delta since the last update
 function Player:update(dt)
-    -- Movement
+    self:updateMovement(dt)
+end
+
+---Updates movement state of player, called on `love.update
+---@param dt number Delta since the last update
+function Player:updateMovement(dt)
     local movingCoeff = 0
     if self.movingDirection == 'LEFT' then
         movingCoeff = -1
     elseif self.movingDirection == 'RIGHT' then
         movingCoeff = 1
     end
-
     self.x = self.x + self.speed * dt * movingCoeff
 end
 
