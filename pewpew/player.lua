@@ -46,7 +46,14 @@ function Player:updateMovement(dt)
    self.x = self.x + self.speed * dt * movingCoeff
 end
 
----Draws the current's player's frame, called on `love.draw`
+function Player:getCollisionBounds()
+   return CollisionSegment(
+      { x = self.x },
+      { x = self.x + self.width }
+   )
+end
+
+---Draws the current"s player"s frame, called on `love.draw`
 function Player:draw()
    love.graphics.draw(self.image, self.x, self.y)
 end
