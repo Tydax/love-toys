@@ -33,20 +33,6 @@ end
 -- bounds.left.x      -1
 -- bounds.right.x     0
 function CollisionSegment:isCollidingWith(bounds)
-   print('self.left.x', self.left.x)
-   print('self.right.x', self.right.x)
-   print('seg.left.x', bounds.left.x)
-   print('seg.right.x', bounds.right.x)
-   print('isPointInsideSegment(bounds.left, self)',
-      isPointInsideSegment(bounds.left, self))
-   print('isPointInsideSegment(bounds.right, self)',
-      isPointInsideSegment(bounds.right, self))
-   print('isPointInsideSegment(self.left, bounds)',
-      isPointInsideSegment(self.left, bounds))
-   print('isPointInsideSegment(self.right, bounds)',
-      isPointInsideSegment(self.right, bounds))
-
-
    return isPointInsideSegment(bounds.left, self)
        or isPointInsideSegment(bounds.right, self)
        or isPointInsideSegment(self.left, bounds)
