@@ -24,6 +24,8 @@ function Player:new()
    self.movingDirection = nil
 end
 
+---Sets player in movement in the given direction, `nil` cancels the movement.
+---@param movingDirection MovementDirection
 function Player:move(movingDirection)
    self.movingDirection = movingDirection
 end
@@ -31,12 +33,12 @@ end
 ---Updates state of player, called on `love.update`
 ---@param dt number Delta since the last update
 function Player:update(dt)
-   self:updateMovement(dt)
+   self:updatePosition(dt)
 end
 
----Updates movement state of player, called on `love.update
+---Updates position state of player, called on `love.update
 ---@param dt number Delta since the last update
-function Player:updateMovement(dt)
+function Player:updatePosition(dt)
    local movingCoeff = 0
    if self.movingDirection == "LEFT" then
       movingCoeff = -1

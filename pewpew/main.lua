@@ -19,24 +19,23 @@ function love.load()
 end
 
 function love.update(dt)
-   local playerCollisionBounds = player:getCollisionBounds()
-
    -- Commands
-   if
-       love.keyboard.isDown("a")
-       and not playerCollisionBounds:isCollidingWith(worldCollisionBounds.left)
-   then
+   if love.keyboard.isDown("a") then
       player:move("LEFT")
-   elseif
-       love.keyboard.isDown("d")
-       and not playerCollisionBounds:isCollidingWith(worldCollisionBounds.right)
-   then
+   elseif love.keyboard.isDown("d") then
       player:move("RIGHT")
    else
       player:move(nil)
    end
 
    player:update(dt)
+
+   local playerCollisionBounds = player:getCollisionBounds()
+   if playerCollisionBounds:isCollidingWith(worldCollisionBounds.left) then
+      player.x = worldCollisionBounds.left.right.x
+   elseif playerCollisionBounds:isCollidingWith(worldCollisionBounds.right) then
+      player.x = worldCollisionBounds.right.left.x - player.width
+   end
 end
 
 function love.draw()
