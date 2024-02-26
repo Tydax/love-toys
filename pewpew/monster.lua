@@ -3,6 +3,7 @@
 local Object = require("libs/classic")
 local CollisionSegment = require("collision-segment")
 local Movement1D = require("movement-1d")
+local Timer = require("timer")
 
 
 ---@class (exact) Monster
@@ -11,9 +12,14 @@ local Movement1D = require("movement-1d")
 ---@field movement Movement1D
 ---@field width number
 ---@field height number
+---@field timer Timer
 local Monster = Object:extend()
 
 local INITIAL_SPEED = 250
+
+local function getRandomDirection()
+   return ({ "LEFT", "RIGHT " })[love.math.random(1, 2)]
+end
 
 ---Constructs a new Monster instance
 ---@param x number
@@ -22,13 +28,25 @@ function Monster:new(x, y)
    self.image = love.graphics.newImage("assets/snake.png")
    self.position = { x = x, y = y }
    self.movement = Movement1D(INITIAL_SPEED, "x")
+   self.movement.direction = getRandomDirection()
    self.width = self.image:getWidth()
    self.height = self.image:getHeight()
+   self.timer = self:makeMovementSwitcherTimer()
+end
+
+function Monster:makeMovementSwitcherTimer()
+   local timerCallback = function()
+      self.movement.direction = self.movement.direction == "LEFT" and "RIGHT" or
+          "LEFT"
+      self.timer = self:makeMovementSwitcherTimer()
+   end
+   return Timer(love.math.random(500, 3000), timerCallback, false)
 end
 
 ---Updates state of Monster, called on `love.update`
 ---@param dt number Delta since the last update
 function Monster:update(dt)
+   self.timer:update(dt)
    self.movement:update(dt, self.position)
 end
 
