@@ -34,10 +34,17 @@ end
 
 local function updateObjectPositionIfCollidingWithWorld(object)
    local collisionBounds = object:getCollisionBounds()
+   local hasCollided = false
    if collisionBounds:isCollidingWith(worldCollisionBounds.left) then
       object.position.x = worldCollisionBounds.left.right.x
+      hasCollided = true
    elseif collisionBounds:isCollidingWith(worldCollisionBounds.right) then
       object.position.x = worldCollisionBounds.right.left.x - object.width
+      hasCollided = true
+   end
+
+   if hasCollided and object.onColliding then
+      object:onColliding("WORLD")
    end
 end
 

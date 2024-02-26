@@ -21,6 +21,10 @@ local function getRandomDirection()
    return ({ "LEFT", "RIGHT " })[love.math.random(1, 2)]
 end
 
+local function reverseDirection(direction)
+   return direction == "LEFT" and "RIGHT" or "LEFT"
+end
+
 ---Constructs a new Monster instance
 ---@param x number
 ---@param y number
@@ -36,8 +40,7 @@ end
 
 function Monster:makeMovementSwitcherTimer()
    local timerCallback = function()
-      self.movement.direction = self.movement.direction == "LEFT" and "RIGHT" or
-          "LEFT"
+      self.movement.direction = reverseDirection(self.movement.direction)
       self.timer = self:makeMovementSwitcherTimer()
    end
    return Timer(love.math.random(500, 3000), timerCallback, false)
@@ -56,6 +59,12 @@ function Monster:getCollisionBounds()
       { x = x },
       { x = x + self.width }
    )
+end
+
+function Monster:onColliding(type)
+   if type == "WORLD" then
+      self.movement.direction = reverseDirection(self.movement.direction)
+   end
 end
 
 ---Draws the current"s Monster"s frame, called on `love.draw`
