@@ -32,6 +32,15 @@ function love.load()
    }
 end
 
+local function updateObjectPositionIfCollidingWithWorld(object)
+   local collisionBounds = object:getCollisionBounds()
+   if collisionBounds:isCollidingWith(worldCollisionBounds.left) then
+      object.position.x = worldCollisionBounds.left.right.x
+   elseif collisionBounds:isCollidingWith(worldCollisionBounds.right) then
+      object.position.x = worldCollisionBounds.right.left.x - object.width
+   end
+end
+
 function love.update(dt)
    -- Commands
    if love.keyboard.isDown("a") then
@@ -45,12 +54,7 @@ function love.update(dt)
    player:update(dt)
    monster:update(dt)
 
-   local playerCollisionBounds = player:getCollisionBounds()
-   if playerCollisionBounds:isCollidingWith(worldCollisionBounds.left) then
-      player.position.x = worldCollisionBounds.left.right.x
-   elseif playerCollisionBounds:isCollidingWith(worldCollisionBounds.right) then
-      player.position.x = worldCollisionBounds.right.left.x - player.width
-   end
+   updateObjectPositionIfCollidingWithWorld(player)
 end
 
 function love.draw()
