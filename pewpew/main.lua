@@ -55,6 +55,7 @@ function love.update(dt)
    monster:update(dt)
 
    updateObjectPositionIfCollidingWithWorld(player)
+   updateObjectPositionIfCollidingWithWorld(monster)
 end
 
 function love.draw()
