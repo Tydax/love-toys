@@ -10,6 +10,12 @@ function love.load()
    player = Player()
    local worldWidth = love.graphics.getWidth()
    local worldHeight = love.graphics.getHeight()
+   local worldWidthMiddleX = worldWidth / 2
+
+   player = Player(0, 5)
+   -- Set to middle
+   player.position.x = worldWidthMiddleX - player.width / 2
+
    worldCollisionBounds = {
       left = CollisionSegment({ x = 0 }, { x = 0 }),
       top = CollisionSegment({ x = 0 }, { x = 0 }),
@@ -21,20 +27,20 @@ end
 function love.update(dt)
    -- Commands
    if love.keyboard.isDown("a") then
-      player:move("LEFT")
+      player.movement.direction = "LEFT"
    elseif love.keyboard.isDown("d") then
-      player:move("RIGHT")
+      player.movement.direction = "RIGHT"
    else
-      player:move(nil)
+      player.movement.direction = nil
    end
 
    player:update(dt)
 
    local playerCollisionBounds = player:getCollisionBounds()
    if playerCollisionBounds:isCollidingWith(worldCollisionBounds.left) then
-      player.x = worldCollisionBounds.left.right.x
+      player.position.x = worldCollisionBounds.left.right.x
    elseif playerCollisionBounds:isCollidingWith(worldCollisionBounds.right) then
-      player.x = worldCollisionBounds.right.left.x - player.width
+      player.position.x = worldCollisionBounds.right.left.x - player.width
    end
 end
 

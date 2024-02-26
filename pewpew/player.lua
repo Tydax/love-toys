@@ -2,62 +2,51 @@
 
 local Object = require("libs/classic")
 local CollisionSegment = require("collision-segment")
+local Movement1D = require("movement-1d")
 
----@alias MovementDirection "LEFT" | "RIGHT" | nil
 
----@class Player
+---@class (exact) Player
 ---@field image love.Image
----@field x number
----@field y number
----@field speed number
+---@field position { x: number, y: number }
+---@field movement Movement1D
 ---@field width number
----@field movingDirection? MovementDirection
+---@field height number
 local Player = Object:extend()
 
----Constructs a new Player instance
-function Player:new()
-   self.image = love.graphics.newImage("assets/panda.png")
-   self.x = 300
-   self.y = 20
-   self.speed = 250
-   self.width = self.image:getWidth()
-   self.movingDirection = nil
-end
+local SPEED = 250
 
----Sets player in movement in the given direction, `nil` cancels the movement.
----@param movingDirection MovementDirection
-function Player:move(movingDirection)
-   self.movingDirection = movingDirection
+---Constructs a new Player instance
+---@param x number
+---@param y number
+function Player:new(x, y)
+   self.image = love.graphics.newImage("assets/panda.png")
+   self.position = { x = x, y = y }
+   self.movement = Movement1D(SPEED, "x")
+   self.width = self.image:getWidth()
+   self.height = self.image:getHeight()
 end
 
 ---Updates state of player, called on `love.update`
 ---@param dt number Delta since the last update
 function Player:update(dt)
-   self:updatePosition(dt)
-end
-
----Updates position state of player, called on `love.update
----@param dt number Delta since the last update
-function Player:updatePosition(dt)
-   local movingCoeff = 0
-   if self.movingDirection == "LEFT" then
-      movingCoeff = -1
-   elseif self.movingDirection == "RIGHT" then
-      movingCoeff = 1
-   end
-   self.x = self.x + self.speed * dt * movingCoeff
+   self.movement:update(dt, self.position)
 end
 
 function Player:getCollisionBounds()
+   local x = self.position.x
    return CollisionSegment(
-      { x = self.x },
-      { x = self.x + self.width }
+      { x = x },
+      { x = x + self.width }
    )
 end
 
 ---Draws the current"s player"s frame, called on `love.draw`
 function Player:draw()
-   love.graphics.draw(self.image, self.x, self.y)
+   love.graphics.draw(
+      self.image,
+      self.position.x,
+      self.position.y
+   )
 end
 
 return Player
