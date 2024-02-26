@@ -18,7 +18,7 @@ local Monster = Object:extend()
 local INITIAL_SPEED = 50
 
 local function getRandomDirection()
-   return ({ "LEFT", "RIGHT " })[love.math.random(1, 2)]
+   return ({ "LEFT", "RIGHT" })[love.math.random(1, 2)]
 end
 
 local function reverseDirection(direction)
