@@ -7,7 +7,6 @@ function love.load()
    local Player = require("player")
    local CollisionSegment = require("collision-segment")
 
-   player = Player()
    local worldWidth = love.graphics.getWidth()
    local worldHeight = love.graphics.getHeight()
    local worldWidthMiddleX = worldWidth / 2
