@@ -15,7 +15,7 @@ local Timer = require("timer")
 ---@field timer Timer
 local Monster = Object:extend()
 
-local INITIAL_SPEED = 250
+local INITIAL_SPEED = 50
 
 local function getRandomDirection()
    return ({ "LEFT", "RIGHT " })[love.math.random(1, 2)]
