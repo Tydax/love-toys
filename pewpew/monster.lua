@@ -4,9 +4,9 @@ local Movable = require("pewpew.movable")
 local Timer = require("timer")
 
 
----@class (exact) Monster
+---@class (exact) Monster: Positionable
 ---@field image love.Image
----@field position { x: number, y: number }
+---@field position Position
 ---@field movement Movable
 ---@field width number
 ---@field height number
@@ -48,7 +48,7 @@ end
 ---@param dt number Delta since the last update
 function Monster:update(dt)
    self.timer:update(dt)
-   self.movement:update(dt, self.position)
+   self.movement:update(dt, self)
 end
 
 function Monster:getCollisionBounds()

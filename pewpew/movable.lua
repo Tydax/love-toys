@@ -1,5 +1,10 @@
 local Object = require("libs/classic")
 
+---@alias Position { x: number, y: number }
+
+---@class (exact) Positionable
+---@field position Position
+
 ---@alias MovementDirection "LEFT" | "RIGHT" | nil
 
 ---@class (exact) Movable
@@ -15,7 +20,10 @@ function Movable:new(speed, coordinate)
    self.speed = speed
 end
 
-function Movable:update(dt, position)
+---Updates the specified positionable's state according to the record movement
+---@param dt number
+---@param positionable Positionable
+function Movable:update(dt, positionable)
    local movingCoeff = 0
    if self.direction == "LEFT" then
       movingCoeff = -1
@@ -23,6 +31,7 @@ function Movable:update(dt, position)
       movingCoeff = 1
    end
 
+   local position = positionable.position
    position[self.coordinate] = position[self.coordinate] +
        self.speed * dt * movingCoeff
 end

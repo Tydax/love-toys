@@ -3,9 +3,9 @@ local CollisionSegment = require("collision-segment")
 local Movable = require("pewpew.movable")
 
 
----@class (exact) Player
+---@class (exact) Player: Positionable
 ---@field image love.Image
----@field position { x: number, y: number }
+---@field position Position
 ---@field movement Movable
 ---@field width number
 ---@field height number
@@ -27,7 +27,7 @@ end
 ---Updates state of player, called on `love.update`
 ---@param dt number Delta since the last update
 function Player:update(dt)
-   self.movement:update(dt, self.position)
+   self.movement:update(dt, self)
 end
 
 function Player:getCollisionBounds()
