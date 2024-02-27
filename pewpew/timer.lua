@@ -1,5 +1,3 @@
----@meta
-
 local Object = require("libs/classic")
 
 ---@class (exact) Timer An object handling callbacks fired after a given delay

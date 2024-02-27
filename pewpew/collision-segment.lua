@@ -1,7 +1,5 @@
 local Object = require("libs/classic")
 
----@meta
-
 ---@class (exact) Point1D
 ---@field x number
 

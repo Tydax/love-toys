@@ -1,5 +1,3 @@
----@meta
-
 local Object = require("libs/classic")
 
 ---@alias MovementDirection "LEFT" | "RIGHT" | nil

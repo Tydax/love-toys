@@ -1,5 +1,3 @@
----@meta
-
 local Object = require("libs/classic")
 local CollisionSegment = require("collision-segment")
 local Movable = require("pewpew.movable")
