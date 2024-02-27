@@ -2,13 +2,13 @@
 
 local Object = require("libs/classic")
 local CollisionSegment = require("collision-segment")
-local Movement1D = require("movement-1d")
+local Movable = require("pewpew.movable")
 
 
 ---@class (exact) Player
 ---@field image love.Image
 ---@field position { x: number, y: number }
----@field movement Movement1D
+---@field movement Movable
 ---@field width number
 ---@field height number
 local Player = Object:extend()
@@ -21,7 +21,7 @@ local SPEED = 250
 function Player:new(x, y)
    self.image = love.graphics.newImage("assets/panda.png")
    self.position = { x = x, y = y }
-   self.movement = Movement1D(SPEED, "x")
+   self.movement = Movable(SPEED, "x")
    self.width = self.image:getWidth()
    self.height = self.image:getHeight()
 end

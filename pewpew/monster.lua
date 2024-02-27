@@ -2,14 +2,14 @@
 
 local Object = require("libs/classic")
 local CollisionSegment = require("collision-segment")
-local Movement1D = require("movement-1d")
+local Movable = require("pewpew.movable")
 local Timer = require("timer")
 
 
 ---@class (exact) Monster
 ---@field image love.Image
 ---@field position { x: number, y: number }
----@field movement Movement1D
+---@field movement Movable
 ---@field width number
 ---@field height number
 ---@field timer Timer
@@ -31,7 +31,7 @@ end
 function Monster:new(x, y)
    self.image = love.graphics.newImage("assets/snake.png")
    self.position = { x = x, y = y }
-   self.movement = Movement1D(INITIAL_SPEED, "x")
+   self.movement = Movable(INITIAL_SPEED, "x")
    self.movement.direction = getRandomDirection()
    self.width = self.image:getWidth()
    self.height = self.image:getHeight()
