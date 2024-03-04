@@ -1,11 +1,5 @@
 local Object = require("libs/classic")
 
----@alias Position { x: number, y: number }
-
----@class (exact) Positionable
----@field position Position
-
----@alias MovementDirection "LEFT" | "RIGHT" | nil
 
 ---@class (exact) Movable
 ---@field direction MovementDirection

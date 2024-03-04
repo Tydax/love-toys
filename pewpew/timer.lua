@@ -1,6 +1,6 @@
 local Object = require("libs/classic")
 
----@class (exact) Timer An object handling callbacks fired after a given delay
+---@class (exact) Timer: Updatable An object handling callbacks fired after a given delay
 ---@field callback fun(dt: number) Function to call when timer fires
 ---@field deltaAcc number Time elapsed since the timer creation in ms
 ---@field delay number Number of milliseconds to wait until firing `callback`
