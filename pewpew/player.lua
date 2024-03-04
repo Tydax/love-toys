@@ -43,7 +43,7 @@ end
 
 function Player:shoot()
    local shootingPosition = {
-      x = self.position.x,
+      x = self.position.x + self.width / 2,
       y = self.position.y + self.height
    }
    self.shootingCapacity:shoot(shootingPosition)
