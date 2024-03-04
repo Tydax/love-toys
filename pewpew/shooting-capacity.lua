@@ -9,7 +9,7 @@ local Timer = require("timer")
 ---@field isOnCooldown boolean
 local ShootingCapacity = Object:extend()
 
-local COOLDOWN = 500
+local COOLDOWN = 250
 
 function ShootingCapacity:new()
    self.drawables = {}
