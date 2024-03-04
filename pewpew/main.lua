@@ -65,6 +65,12 @@ function love.update(dt)
    updateObjectPositionIfCollidingWithWorld(monster)
 end
 
+function love.keypressed(key)
+   if key == "space" then
+      player:shoot()
+   end
+end
+
 function love.draw()
    player:draw()
    monster:draw()
