@@ -18,7 +18,7 @@ function Timer:new(delay, callback, isRepeatable)
    self.deltaAcc = 0
    self.delay = delay
    self.hasFinished = false
-   self.isRepeatable = isRepeatable
+   self.isRepeatable = isRepeatable or false
 end
 
 ---love.update callback

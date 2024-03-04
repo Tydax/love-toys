@@ -9,6 +9,8 @@ local Timer = require("timer")
 ---@field isOnCooldown boolean
 local ShootingCapacity = Object:extend()
 
+local COOLDOWN = 500
+
 function ShootingCapacity:new()
    self.drawables = {}
    self.updatables = {}
@@ -25,7 +27,7 @@ function ShootingCapacity:shoot(position)
    table.insert(self.drawables, pew)
    table.insert(self.updatables, pew)
 
-   local cooldownTimer = Timer(500, function()
+   local cooldownTimer = Timer(COOLDOWN, function()
       self.isOnCooldown = false
       self.updatables["COOLDOWN"] = nil
    end)
