@@ -50,6 +50,8 @@ end
 
 function love.update(dt)
    -- Commands
+
+   -- Movement
    if love.keyboard.isDown("a") then
       player.movement.direction = "LEFT"
    elseif love.keyboard.isDown("d") then
@@ -58,17 +60,15 @@ function love.update(dt)
       player.movement.direction = nil
    end
 
+   if love.keyboard.isDown("space") then
+      player:shoot()
+   end
+
    player:update(dt)
    monster:update(dt)
 
    updateObjectPositionIfCollidingWithWorld(player)
    updateObjectPositionIfCollidingWithWorld(monster)
-end
-
-function love.keypressed(key)
-   if key == "space" then
-      player:shoot()
-   end
 end
 
 function love.draw()
