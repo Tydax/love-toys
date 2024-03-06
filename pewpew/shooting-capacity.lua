@@ -5,10 +5,12 @@ local Timer = require("timer")
 ---@class (exact) ShootingCapacity: Updatable, Drawable
 ---@field pews Pew[]
 ---@field cooldown Timer?
+---@overload fun(): ShootingCapacity
 local ShootingCapacity = Object:extend()
 
 local COOLDOWN = 250
 
+---@type fun(self: ShootingCapacity)
 function ShootingCapacity:new()
    self.pews = {}
 end

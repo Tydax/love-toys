@@ -5,8 +5,10 @@ local Object = require("libs/classic")
 ---@field direction MovementDirection
 ---@field coordinate "x" | "y"
 ---@field speed number
+---@overload fun(speed: number, coordinate: "x" | "y"): Movable
 local Movable = Object:extend()
 
+---@type fun(self: Movable, speed: number, coordinate: "x" | "y")
 function Movable:new(speed, coordinate)
    self.coordinate = coordinate or "x"
    self.direction = nil

@@ -8,11 +8,11 @@ local Object = require("libs/classic")
 ---@field right Point1D
 
 ---@class CollisionSegment: Segment
+---@overload fun(leftPoint: Point1D, rightPoint: Point1D): CollisionSegment
 local CollisionSegment = Object:extend()
 
 ---Constructs a new collision segment, starting from `leftPoint` to the `rightPoint`
----@param leftPoint Point1D
----@param rightPoint Point1D
+---@type fun(self: CollisionSegment, leftPoint: Point1D, rightPoint: Point1D)
 function CollisionSegment:new(leftPoint, rightPoint)
    self.left = leftPoint
    self.right = rightPoint

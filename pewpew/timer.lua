@@ -9,12 +9,11 @@ local Object = require("libs/classic")
 ---@field hasFinished boolean `true` if the the timer has finished
 ---@field isRepeatable boolean `true` if the timer should auto-resets itself and
 ---every `delay` instead
+---@overload  fun(delay: number, callback: TimerCallback, isRepeatable: boolean): Timer
 local Timer = Object:extend()
 
 ---Constructs a new Timer
----@param delay number
----@param callback TimerCallback
----@param isRepeatable boolean
+---@type fun(self: Timer, delay: number, callback: TimerCallback, isRepeatable: boolean)
 function Timer:new(delay, callback, isRepeatable)
    self.callback = callback
    self.deltaAcc = 0
