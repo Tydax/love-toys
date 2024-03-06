@@ -26,10 +26,6 @@ local function isPointInsideSegment(point, segment)
    return segment.left.x <= point.x and point.x <= segment.right.x
 end
 
--- self.left.x     300
--- self.right.x    410
--- bounds.left.x      -1
--- bounds.right.x     0
 function CollisionSegment:isCollidingWith(bounds)
    return isPointInsideSegment(bounds.left, self)
        or isPointInsideSegment(bounds.right, self)

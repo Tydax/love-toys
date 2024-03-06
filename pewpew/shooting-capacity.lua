@@ -3,47 +3,41 @@ local Pew = require("pew")
 local Timer = require("timer")
 
 ---@class (exact) ShootingCapacity: Updatable, Drawable
----@field updatables Updatable[]
----@field drawables Drawable[]
 ---@field pews Pew[]
----@field isOnCooldown boolean
+---@field cooldown Timer?
 local ShootingCapacity = Object:extend()
 
 local COOLDOWN = 250
 
 function ShootingCapacity:new()
-   self.drawables = {}
-   self.updatables = {}
    self.pews = {}
-   self.isOnCooldown = false
 end
 
 function ShootingCapacity:shoot(position)
-   if self.isOnCooldown then return end
+   if self.cooldown then return end
 
-   self.isOnCooldown = true
    local pew = Pew(position)
    table.insert(self.pews, pew)
-   table.insert(self.drawables, pew)
-   table.insert(self.updatables, pew)
 
    local cooldownTimer = Timer(COOLDOWN, function()
-      self.isOnCooldown = false
-      self.updatables["COOLDOWN"] = nil
+      self.cooldown = nil
    end)
-   self.updatables["COOLDOWN"] = cooldownTimer
+   self.cooldown = cooldownTimer
 end
 
 function ShootingCapacity:update(dt)
-   for _, updatable in pairs(self.updatables) do
-      updatable:update(dt)
+   if self.cooldown then
+      self.cooldown:update(dt)
+   end
+   for _, pew in ipairs(self.pews) do
+      pew:update(dt)
    end
 end
 
 ---Draws the current"s player"s frame, called on `love.draw`
 function ShootingCapacity:draw()
-   for _, drawable in ipairs(self.drawables) do
-      drawable:draw()
+   for _, pew in ipairs(self.pews) do
+      pew:draw()
    end
 end
 
