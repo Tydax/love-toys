@@ -1,27 +1,24 @@
-local Object = require("libs/classic")
+local Entity = require("entity")
 local CollisionSegment = require("collision-segment")
 local Movable = require("movable")
 
----@class (exact) Pew: Drawable, Positionable, Updatable
----@field image love.Image
----@field position Position
+---@class (exact) Pew: Entity
 ---@field movement Movable
----@field width number
----@field height number
-local Pew = Object:extend()
+---@overload fun(position?: Position): Pew
+local Pew = Entity:extend()
 
 local SPEED = 500
 
 ---Constructs a new Pew instance
----@param x number
----@param y number
-function Pew:new(x, y)
-   self.image = love.graphics.newImage("assets/bullet.png")
-   self.position = { x = x, y = y }
+---@type fun(self: Pew, position?: Position)
+function Pew:new(position)
+   Pew.super.new(
+      self,
+      love.graphics.newImage("assets/bullet.png"),
+      position
+   )
    self.movement = Movable(SPEED, "y")
    self.movement.direction = "RIGHT"
-   self.width = self.image:getWidth()
-   self.height = self.image:getHeight()
 end
 
 ---Updates state of Pew, called on `love.update`
@@ -35,15 +32,6 @@ function Pew:getCollisionBounds()
    return CollisionSegment(
       { x = x },
       { x = x + self.width }
-   )
-end
-
----Draws the current"s pew"s frame, called on `love.draw`
-function Pew:draw()
-   love.graphics.draw(
-      self.image,
-      self.position.x,
-      self.position.y
    )
 end
 

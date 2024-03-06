@@ -7,7 +7,6 @@ local Object = require("libs/classic")
 ---@field speed number
 local Movable = Object:extend()
 
-
 function Movable:new(speed, coordinate)
    self.coordinate = coordinate or "x"
    self.direction = nil
@@ -16,7 +15,7 @@ end
 
 ---Updates the specified positionable's state according to the record movement
 ---@param dt number
----@param positionable Positionable
+---@param positionable Entity
 function Movable:update(dt, positionable)
    local movingCoeff = 0
    if self.direction == "LEFT" then

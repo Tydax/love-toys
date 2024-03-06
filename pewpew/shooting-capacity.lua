@@ -22,7 +22,7 @@ function ShootingCapacity:shoot(position)
    if self.isOnCooldown then return end
 
    self.isOnCooldown = true
-   local pew = Pew(position.x, position.y)
+   local pew = Pew(position)
    table.insert(self.pews, pew)
    table.insert(self.drawables, pew)
    table.insert(self.updatables, pew)
@@ -31,7 +31,6 @@ function ShootingCapacity:shoot(position)
       self.isOnCooldown = false
       self.updatables["COOLDOWN"] = nil
    end)
-   cooldownTimer.isGay = true
    self.updatables["COOLDOWN"] = cooldownTimer
 end
 

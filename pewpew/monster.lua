@@ -1,17 +1,14 @@
-local Object = require("libs/classic")
+local Entity = require("entity")
 local CollisionSegment = require("collision-segment")
-local Movable = require("pewpew.movable")
+local Movable = require("movable")
 local Timer = require("timer")
 
 
----@class (exact) Monster: Positionable
----@field image love.Image
----@field position Position
+---@class (exact) Monster: Entity
 ---@field movement Movable
----@field width number
----@field height number
 ---@field timer Timer
-local Monster = Object:extend()
+---@overload fun(position?: Position): Monster
+local Monster = Entity:extend()
 
 local INITIAL_SPEED = 50
 
@@ -23,25 +20,32 @@ local function reverseDirection(direction)
    return direction == "LEFT" and "RIGHT" or "LEFT"
 end
 
----Constructs a new Monster instance
----@param x number
----@param y number
-function Monster:new(x, y)
-   self.image = love.graphics.newImage("assets/snake.png")
-   self.position = { x = x, y = y }
-   self.movement = Movable(INITIAL_SPEED, "x")
-   self.movement.direction = getRandomDirection()
-   self.width = self.image:getWidth()
-   self.height = self.image:getHeight()
-   self.timer = self:makeMovementSwitcherTimer()
+local function getRandomMovementDelay()
+   return love.math.random(500, 3000)
 end
 
-function Monster:makeMovementSwitcherTimer()
-   local timerCallback = function()
+---@param self Monster
+---@return Timer
+local function makeMovementSwitcherTimer(self)
+   ---@type TimerCallback
+   local function timerCallback(timer)
       self.movement.direction = reverseDirection(self.movement.direction)
-      self.timer = self:makeMovementSwitcherTimer()
+      timer.delay = getRandomMovementDelay()
    end
-   return Timer(love.math.random(500, 3000), timerCallback, false)
+   return Timer(getRandomMovementDelay(), timerCallback, true)
+end
+
+---Constructs a new Monster instance
+---@type fun(self: Monster, position?: Position)
+function Monster:new(position)
+   Monster.super.new(
+      self,
+      love.graphics.newImage("assets/snake.png"),
+      position
+   )
+   self.movement = Movable(INITIAL_SPEED, "x")
+   self.movement.direction = getRandomDirection()
+   self.timer = makeMovementSwitcherTimer(self)
 end
 
 ---Updates state of Monster, called on `love.update`
@@ -63,15 +67,6 @@ function Monster:onColliding(type)
    if type == "WORLD" then
       self.movement.direction = reverseDirection(self.movement.direction)
    end
-end
-
----Draws the current"s Monster"s frame, called on `love.draw`
-function Monster:draw()
-   love.graphics.draw(
-      self.image,
-      self.position.x,
-      self.position.y
-   )
 end
 
 return Monster

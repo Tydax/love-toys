@@ -15,11 +15,11 @@ function love.load()
    local worldHeight = love.graphics.getHeight()
    local worldWidthMiddleX = worldWidth / 2
 
-   player = Player(0, 5)
+   player = Player({ x = 0, y = 5 })
    -- Set to middle
    player.position.x = worldWidthMiddleX - player.width / 2
 
-   monster = Monster(0, 0)
+   monster = Monster()
    -- Set to middle
    monster.position.x = worldWidthMiddleX - monster.width / 2
    monster.position.y = worldHeight - monster.height - 5

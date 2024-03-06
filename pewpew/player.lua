@@ -1,29 +1,26 @@
-local Object = require("libs/classic")
 local CollisionSegment = require("collision-segment")
 local Movable = require("movable")
 local ShootingCapacity = require("shooting-capacity")
+local Entity = require("entity")
 
----@class (exact) Player: Positionable
----@field image love.Image
----@field position Position
+---@class (exact) Player: Entity
 ---@field movement Movable
----@field width number
----@field height number
 ---@field shootingCapacity ShootingCapacity
-local Player = Object:extend()
+---@overload fun(position?: Position): Player
+local Player = Entity:extend()
 
 local SPEED = 250
 
 ---Constructs a new Player instance
----@param x number
----@param y number
-function Player:new(x, y)
-   self.image = love.graphics.newImage("assets/panda.png")
-   self.position = { x = x, y = y }
+---@type fun(self: Player, position?: Position)
+function Player:new(position)
+   Player.super.new(
+      self,
+      love.graphics.newImage("assets/panda.png"),
+      position
+   )
    self.movement = Movable(SPEED, "x")
    self.shootingCapacity = ShootingCapacity()
-   self.width = self.image:getWidth()
-   self.height = self.image:getHeight()
 end
 
 ---Updates state of player, called on `love.update`
@@ -51,11 +48,7 @@ end
 
 ---Draws the current"s player"s frame, called on `love.draw`
 function Player:draw()
-   love.graphics.draw(
-      self.image,
-      self.position.x,
-      self.position.y
-   )
+   Player.super.draw(self)
    self.shootingCapacity:draw()
 end
 

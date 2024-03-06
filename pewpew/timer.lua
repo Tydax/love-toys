@@ -1,7 +1,9 @@
 local Object = require("libs/classic")
 
+---@alias TimerCallback fun(self: Timer, dt: number)
+
 ---@class (exact) Timer: Updatable An object handling callbacks fired after a given delay
----@field callback fun(dt: number) Function to call when timer fires
+---@field callback TimerCallback Function to call when timer fires
 ---@field deltaAcc number Time elapsed since the timer creation in ms
 ---@field delay number Number of milliseconds to wait until firing `callback`
 ---@field hasFinished boolean `true` if the the timer has finished
@@ -11,7 +13,7 @@ local Timer = Object:extend()
 
 ---Constructs a new Timer
 ---@param delay number
----@param callback fun(dt: number)
+---@param callback TimerCallback
 ---@param isRepeatable boolean
 function Timer:new(delay, callback, isRepeatable)
    self.callback = callback
@@ -28,7 +30,7 @@ function Timer:update(dt)
 
    if self.deltaAcc >= self.delay then
       self.hasFinished = true
-      self.callback(dt)
+      self.callback(self, dt)
       if self.isRepeatable then
          self.deltaAcc = 0
       end
