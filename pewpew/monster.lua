@@ -1,3 +1,4 @@
+local direction = require("direction")
 local Entity = require("entity")
 local CollisionSegment = require("collision-segment")
 local Movable = require("movable")
@@ -12,14 +13,6 @@ local Monster = Entity:extend()
 
 local INITIAL_SPEED = 50
 
-local function getRandomDirection()
-   return ({ "LEFT", "RIGHT" })[love.math.random(1, 2)]
-end
-
-local function reverseDirection(direction)
-   return direction == "LEFT" and "RIGHT" or "LEFT"
-end
-
 local function getRandomMovementDelay()
    return love.math.random(500, 3000)
 end
@@ -29,7 +22,9 @@ end
 local function makeMovementSwitcherTimer(self)
    ---@type TimerCallback
    local function timerCallback(timer)
-      self.movement.direction = reverseDirection(self.movement.direction)
+      self.movement.direction = direction.reverse(
+         self.movement.direction
+      )
       timer.delay = getRandomMovementDelay()
    end
    return Timer(getRandomMovementDelay(), timerCallback, true)
@@ -44,7 +39,7 @@ function Monster:new(position)
       position
    )
    self.movement = Movable(INITIAL_SPEED, "x")
-   self.movement.direction = getRandomDirection()
+   self.movement.direction = direction.getRandom()
    self.timer = makeMovementSwitcherTimer(self)
 end
 
@@ -65,7 +60,7 @@ end
 
 function Monster:onColliding(type)
    if type == "WORLD" then
-      self.movement.direction = reverseDirection(self.movement.direction)
+      self.movement.direction = direction.reverse(self.movement.direction)
    end
 end
 
