@@ -1,10 +1,10 @@
 local CollisionSegment = require("collision-segment")
-local Movable = require("movable")
+local LateralMovement = require("lateral-movement")
 local ShootingCapacity = require("shooting-capacity")
 local Entity = require("entity")
 
 ---@class (exact) Player: Entity
----@field movement Movable
+---@field movement LateralMovement
 ---@field shootingCapacity ShootingCapacity
 ---@overload fun(position?: Position): Player
 local Player = Entity:extend()
@@ -19,7 +19,7 @@ function Player:new(position)
       love.graphics.newImage("assets/panda.png"),
       position
    )
-   self.movement = Movable(SPEED, "x")
+   self.movement = LateralMovement(SPEED, nil, "x")
    self.shootingCapacity = ShootingCapacity()
 end
 

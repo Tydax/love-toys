@@ -1,9 +1,9 @@
 local Entity = require("entity")
 local CollisionSegment = require("collision-segment")
-local Movable = require("movable")
+local LateralMovement = require("lateral-movement")
 
 ---@class (exact) Pew: Entity
----@field movement Movable
+---@field movement LateralMovement
 ---@overload fun(position?: Position): Pew
 local Pew = Entity:extend()
 
@@ -17,8 +17,7 @@ function Pew:new(position)
       love.graphics.newImage("assets/bullet.png"),
       position
    )
-   self.movement = Movable(SPEED, "y")
-   self.movement.direction = "RIGHT"
+   self.movement = LateralMovement(SPEED, "RIGHT", "y")
 end
 
 ---Updates state of Pew, called on `love.update`

@@ -1,12 +1,12 @@
 local direction = require("direction")
 local Entity = require("entity")
 local CollisionSegment = require("collision-segment")
-local Movable = require("movable")
+local LateralMovement = require("lateral-movement")
 local Timer = require("timer")
 
 
 ---@class (exact) Monster: Entity
----@field movement Movable
+---@field movement LateralMovement
 ---@field timer Timer
 ---@overload fun(position?: Position): Monster
 local Monster = Entity:extend()
@@ -38,7 +38,7 @@ function Monster:new(position)
       love.graphics.newImage("assets/snake.png"),
       position
    )
-   self.movement = Movable(INITIAL_SPEED, "x")
+   self.movement = LateralMovement(INITIAL_SPEED, direction.getRandom(), "x")
    self.movement.direction = direction.getRandom()
    self.timer = makeMovementSwitcherTimer(self)
 end
