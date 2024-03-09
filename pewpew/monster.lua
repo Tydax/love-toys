@@ -36,10 +36,9 @@ function Monster:new(position)
    Monster.super.new(
       self,
       love.graphics.newImage("assets/snake.png"),
+      LateralMovement(INITIAL_SPEED, direction.getRandom() "x"),
       position
    )
-   self.movement = LateralMovement(INITIAL_SPEED, direction.getRandom(), "x")
-   self.movement.direction = direction.getRandom()
    self.timer = makeMovementSwitcherTimer(self)
 end
 

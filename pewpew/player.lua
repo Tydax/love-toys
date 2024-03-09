@@ -4,7 +4,6 @@ local ShootingCapacity = require("shooting-capacity")
 local Entity = require("entity")
 
 ---@class (exact) Player: Entity
----@field movement LateralMovement
 ---@field shootingCapacity ShootingCapacity
 ---@overload fun(position?: Position): Player
 local Player = Entity:extend()
@@ -17,16 +16,16 @@ function Player:new(position)
    Player.super.new(
       self,
       love.graphics.newImage("assets/panda.png"),
+      LateralMovement(SPEED, nil, "x"),
       position
    )
-   self.movement = LateralMovement(SPEED, nil, "x")
    self.shootingCapacity = ShootingCapacity()
 end
 
 ---Updates state of player, called on `love.update`
 ---@param dt number Delta since the last update
 function Player:update(dt)
-   self.movement:update(dt, self)
+   Player.super.update(self, dt)
    self.shootingCapacity:update(dt)
 end
 

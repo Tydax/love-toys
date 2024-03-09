@@ -15,15 +15,10 @@ function Pew:new(position)
    Pew.super.new(
       self,
       love.graphics.newImage("assets/bullet.png"),
+      LateralMovement(SPEED, "RIGHT", "y"),
       position
    )
-   self.movement = LateralMovement(SPEED, "RIGHT", "y")
-end
-
----Updates state of Pew, called on `love.update`
----@param dt number Delta since the last update
-function Pew:update(dt)
-   self.movement:update(dt, self)
+   self.movement.direction = "RIGHT"
 end
 
 function Pew:getCollisionBounds()
