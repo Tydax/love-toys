@@ -23,11 +23,25 @@ function Monster:new(position)
    )
 end
 
-function Monster:getCollisionBounds()
-   local x = self.position.x
+---@param axis "HORIZONTAL" | "VERTICAL"
+---@return CollisionSegment
+function Monster:getCollisionBounds(axis)
+   ---@type "x" | "y"
+   local coordinate
+   ---@type number
+   local size
+   if axis == "HORIZONTAL" then
+      coordinate = "x"
+      size = self.width
+   else
+      coordinate = "y"
+      size = self.height
+   end
+
+   local x = self.position[coordinate]
    return CollisionSegment(
       { x = x },
-      { x = x + self.width }
+      { x = x + size }
    )
 end
 

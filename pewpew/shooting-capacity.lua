@@ -27,6 +27,11 @@ function ShootingCapacity:shoot(position)
    self.cooldown = cooldownTimer
 end
 
+---@param i integer
+function ShootingCapacity:destroyPew(i)
+   table.remove(self.pews, i)
+end
+
 function ShootingCapacity:update(dt)
    if self.cooldown then
       self.cooldown:update(dt)

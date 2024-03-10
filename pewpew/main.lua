@@ -33,7 +33,7 @@ function love.load()
 end
 
 local function updateObjectPositionIfCollidingWithWorld(object)
-   local collisionBounds = object:getCollisionBounds()
+   local collisionBounds = object:getCollisionBounds("HORIZONTAL")
    local hasCollided = false
    if collisionBounds:isCollidingWith(worldCollisionBounds.left) then
       object.position.x = worldCollisionBounds.left.right.x
@@ -69,6 +69,35 @@ function love.update(dt)
 
    updateObjectPositionIfCollidingWithWorld(player)
    updateObjectPositionIfCollidingWithWorld(monster)
+
+   for i = #player.shootingCapacity.pews, 1, -1 do
+      local pew = player.shootingCapacity.pews[i]
+
+      local pewCollisions = {
+         h = pew:getCollisionBounds("HORIZONTAL"),
+         v = pew:getCollisionBounds("VERTICAL")
+      }
+      local monsterCollisions = {
+         h = monster:getCollisionBounds("HORIZONTAL"),
+         v = monster:getCollisionBounds("VERTICAL")
+      }
+
+      local hasCollided = false
+      if
+          pewCollisions.h:isCollidingWith(monsterCollisions.h)
+          and pewCollisions.v:isCollidingWith(monsterCollisions.v)
+      then
+         hasCollided = true
+         print("hit")
+      elseif pewCollisions.v:isCollidingWith(worldCollisionBounds.bottom) then
+         hasCollided = true
+         print("missed")
+      end
+
+      if hasCollided then
+         player.shootingCapacity:destroyPew(i)
+      end
+   end
 end
 
 function love.draw()
