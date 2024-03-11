@@ -88,7 +88,7 @@ function love.update(dt)
           and pewCollisions.v:isCollidingWith(monsterCollisions.v)
       then
          hasCollided = true
-         print("hit")
+         monster:onDamage()
       elseif pewCollisions.v:isCollidingWith(worldCollisionBounds.bottom) then
          hasCollided = true
          print("missed")
